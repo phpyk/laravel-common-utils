@@ -1,0 +1,17 @@
+{
+    "name": "phpyk/utils",
+    "description": "a generic toolkit for web development",
+    "type": "library",
+    "require": {
+        "gregwar/captcha": "^1.1",
+        "maatwebsite/excel": "^2.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "phpyk",
+            "email": "skdyk@163.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
