@@ -1,4 +1,5 @@
 <?php
+namespace Phpyk\Utils;
 /**
  * Created by PhpStorm.
  * User: kk
@@ -6,7 +7,6 @@
  * Time: 下午2:38
  * 官方文档:http://www.maatwebsite.nl/laravel-excel/docs/export
  */
-namespace Phpyk\Utils;
 
 use Maatwebsite\Excel\Facades\Excel;
 

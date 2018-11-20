@@ -1,4 +1,5 @@
 <?php
+namespace Phpyk\Utils\Filters;
 /**
  * Created by PhpStorm.
  * User: kk
@@ -6,7 +7,6 @@
  * Time: 下午3:57
  */
 
-namespace Phpyk\Utils\Filters;
 
 
 class MobileFilter

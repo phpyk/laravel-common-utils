@@ -1,11 +1,11 @@
 <?php
+namespace Phpyk\Utils;
 /**
  * Created by PhpStorm.
  * User: phpyk
  * Date: 2018/11/20
  * Time: 10:06 AM
  */
-namespace Phpyk\Utils;
 
 
 class Browser
@@ -20,6 +20,9 @@ class Browser
 
     public static function isBrowser()
     {
+        if(!isset($_SERVER['HTTP_USER_AGENT'])){
+            return false;
+        }
         if (strpos($_SERVER['HTTP_USER_AGENT'],'MicroMessenger') !== false )
             return true;
         if (strpos($_SERVER['HTTP_USER_AGENT'],'Mozilla') !== false )

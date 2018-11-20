@@ -1,6 +1,6 @@
 <?php
-
 namespace Phpyk\Utils;
+
 
 class Encryption
 {

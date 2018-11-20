@@ -1,11 +1,11 @@
 <?php
+namespace Phpyk\Utils;
 /**
  * Created by PhpStorm.
  * User: kk
  * Date: 2018/1/29
  * Time: 下午5:18
  */
-namespace Phpyk\Utils;
 
 class DateTime
 {

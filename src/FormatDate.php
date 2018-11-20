@@ -1,4 +1,5 @@
 <?php
+namespace Phpyk\Utils;
 /**
  * Created by PhpStorm.
  * User: kk
@@ -6,7 +7,6 @@
  * Time: 11:07 AM
  */
 
-namespace Phpyk\Utils;
 
 
 class FormatDate
