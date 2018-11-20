@@ -7,10 +7,10 @@ namespace Phpyk\Utils\Filters;
 class IdCardFilter
 {
 
-    private $_birth_year;
-    private $_birth_month;
-    private $_birth_date;
-    private $_gender = 1;
+    private $birthYear;
+    private $birthMonth;
+    private $birthDate;
+    private $gender = 1;
 
     /**
      * 获取出生年
@@ -18,7 +18,7 @@ class IdCardFilter
      */
     public function getBirthYear()
     {
-        return intval($this->_birth_year);
+        return intval($this->birthYear);
     }
 
     /**
@@ -27,7 +27,7 @@ class IdCardFilter
      */
     public function getBirthMonth()
     {
-        return $this->_birth_month;
+        return $this->birthMonth;
     }
 
     /**
@@ -36,7 +36,7 @@ class IdCardFilter
      */
     public function getBirthDate()
     {
-        return $this->_birth_date;
+        return $this->birthDate;
     }
 
     /**
@@ -45,33 +45,33 @@ class IdCardFilter
      */
     public function getGender()
     {
-        return $this->_gender;
+        return $this->gender;
     }
 
     public function filter($id_card)
     {
-        $this->_birth_year = '';
-        $card_no = trim($id_card);
-        if($this->isChinaCard($card_no))
+        $this->birthYear = '';
+        $cardNo = trim($id_card);
+        if($this->isChinaCard($cardNo))
         {
-            return $card_no;
-        }elseif($this->isAgentNumber($card_no))
+            return $cardNo;
+        }elseif($this->isAgentNumber($cardNo))
         {
-            return $card_no;
-        }elseif($this->isHongKongCard($card_no))
+            return $cardNo;
+        }elseif($this->isHongKongCard($cardNo))
         {
-            return $card_no;
-        }elseif($this->isTaiWanCard($card_no))
+            return $cardNo;
+        }elseif($this->isTaiWanCard($cardNo))
         {
-            return $card_no;
-        }elseif($this->isMacaoCard($card_no))
+            return $cardNo;
+        }elseif($this->isMacaoCard($cardNo))
         {
-            return $card_no;
-        }elseif($this->isPassport($card_no))
+            return $cardNo;
+        }elseif($this->isPassport($cardNo))
         {
-            return $card_no;
-        }elseif($this->isTaiBaoCard($card_no)){
-            return substr($card_no, 3);
+            return $cardNo;
+        }elseif($this->isTaiBaoCard($cardNo)){
+            return substr($cardNo, 3);
         }else
         {
             return false;
@@ -79,28 +79,28 @@ class IdCardFilter
     }
 
     // 计算身份证校验码，根据国家标准GB 11643-1999
-    function idcard_verify_number($idcard_base)
+    function VerifyIdCardNumber($number)
     {
-        if(strlen($idcard_base) != 17)
+        if(strlen($number) != 17)
         {
             return false;
         }
         //加权因子
         $factor = array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
         //校验码对应值
-        $verify_number_list = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+        $verifyNumberList = array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
         $checksum = 0;
-        for ($i = 0; $i < strlen($idcard_base); $i++)
+        for ($i = 0; $i < strlen($number); $i++)
         {
-            $checksum += substr($idcard_base, $i, 1) * $factor[$i];
+            $checksum += substr($number, $i, 1) * $factor[$i];
         }
         $mod = $checksum % 11;
-        $verify_number = $verify_number_list[$mod];
-        return $verify_number;
+        $verifyNumber = $verifyNumberList[$mod];
+        return $verifyNumber;
     }
 
     // 将15位身份证升级到18位
-    function idcard_15to18($idcard){
+    function reformatLen15to18($idcard){
         if (strlen($idcard) != 15){
             return false;
         }else{
@@ -111,15 +111,15 @@ class IdCardFilter
                 $idcard = substr($idcard, 0, 6) . '19'. substr($idcard, 6, 9);
             }
         }
-        $idcard = $idcard . $this->idcard_verify_number($idcard);
+        $idcard = $idcard . $this->VerifyIdCardNumber($idcard);
         return $idcard;
     }
 
     // 18位身份证校验码有效性检查
-    function idcard_checksum18($idcard){
+    function valideCheckLen18($idcard){
         if (strlen($idcard) != 18){ return false; }
         $idcard_base = substr($idcard, 0, 17);
-        if ($this->idcard_verify_number($idcard_base) != strtoupper(substr($idcard, 17, 1))){
+        if ($this->VerifyIdCardNumber($idcard_base) != strtoupper(substr($idcard, 17, 1))){
             return false;
         }else{
             return $idcard;
@@ -137,17 +137,17 @@ class IdCardFilter
         if(strlen($card_no) == 15)
         {
             $r = substr($card_no, 14, 1);
-            $card_no = $this->idcard_15to18($card_no);
+            $card_no = $this->reformatLen15to18($card_no);
         }else
         {
             $r = substr($card_no, 16, 1);
         }
-        $this->_gender = ($r%2==0) ? 2 : 1;
+        $this->gender = ($r%2==0) ? 2 : 1;
         //$card_no = strlen($card_no) == 15 ? $this->idcard_15to18($card_no) : $card_no;
-        $this->_birth_year = substr($card_no, 6, 4);
-        $this->_birth_month = substr($card_no, 10, 2);
-        $this->_birth_date = substr($card_no, 12, 2);
-        return $this->idcard_checksum18($card_no);
+        $this->birthYear = substr($card_no, 6, 4);
+        $this->birthMonth = substr($card_no, 10, 2);
+        $this->birthDate = substr($card_no, 12, 2);
+        return $this->valideCheckLen18($card_no);
     }
 
     /**
@@ -284,8 +284,8 @@ class IdCardFilter
            return false;
         }
             //身份证编码规范验证
-        $idcard_base = substr($idcard,0,17);
-        if(strtoupper(substr($idcard,17,1)) != $this->getVerifyBit($idcard_base)){
+        $idcardBase = substr($idcard,0,17);
+        if(strtoupper(substr($idcard,17,1)) != $this->getVerifyBit($idcardBase)){
             return false;
         }
         return true;
